@@ -17,3 +17,6 @@
 # match_maker true,  true,  true, true, nil     # => [false, true]
 # match_maker true,  true,  true, 0, nil        # => [false, true]
 
+def match_maker(eval, *args)
+  args.each_slice(2).map {|a,b| !!a == !!b ? !eval : eval}
+end

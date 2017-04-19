@@ -29,5 +29,21 @@
 # create it from scratch :)
 
 
-def pathify
+def pathify(structure)
+  tree = ""
+  structure.each do |k, v|
+    puts "#{k}: is a hash: #{v.is_a? Hash}"
+    if v.is_a? Hash
+      tree += "/#{k}"
+      pathify(v)
+    else
+      tree += "/#{k}"
+    end
+  end
+  tree
 end
+
+pathify ({'usr' => {'bin' => ['ruby'] }}) # => "/usr"
+
+# >> usr: is a hash: true
+# >> bin: is a hash: false

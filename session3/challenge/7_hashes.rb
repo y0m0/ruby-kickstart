@@ -31,10 +31,16 @@ class HTMLTag
     :monospace  => '"Courier New", "Lucida Console"'
   }
 
+  COLORS = {
+    :red    =>  "#FF0000",
+    :blue   =>  "#0000FF",
+    :green  =>  "#00FF00"
+  }
+
   attr_accessor :name, :innerHTML, :options
 
   # options: :multiline should be true or false
-  def initialize(name, innerHTML, options)
+  def initialize(name, innerHTML, options = Hash.new)
     @name, @innerHTML, @options = name, innerHTML, options
   end
 
@@ -43,9 +49,16 @@ class HTMLTag
     FONTS[font]
   end
 
+  def color
+    color = options[:color] # one of :red, :blue, or :green
+    COLORS[color]
+  end
+
   def style
-    return nil unless options[:font]
-    "style='font-family:#{font}'"
+    return nil unless options[:font] || options[:color]
+    return "style='font-family:#{font}'" if !options[:color]
+    return "style='color:#{color};'" if !options[:font]
+    "style='font-family:#{font};color:#{color};'"
   end
 
   def to_s
@@ -56,3 +69,22 @@ class HTMLTag
   end
 
 end
+
+# html = HTMLTag.new 'p', 'Hello World', :multiline => false, :color => :red
+# html.to_s     # => "<p style='color:#FF0000'>Hello World</p>\n"
+#
+# sports = [
+#   HTMLTag.new('li', 'baseball', :multiline => false, :color => :red,   :font => :serif) ,
+#   HTMLTag.new('li', 'soccer',   :multiline => false, :color => :green, :font => :sans_serif) ,
+#   HTMLTag.new('li', 'football', :multiline => false, :color => :blue,  :font => :monospace) ,
+# ]
+#
+# ordered_list = HTMLTag.new 'ol' , sports.join , :multiline => true
+#
+# puts ordered_list  # => nil
+#
+# # >> <ol >
+# # >> <li style='color:#FF0000;font-family:"Times New Roman", "Georgia"'>baseball</li>
+# # >> <li style='color:#00FF00;font-family:"Arial", "Verdana"'>soccer</li>
+# # >> <li style='color:#0000FF;font-family:"Courier New", "Lucida Console"'>football</li>
+# # >> </ol>

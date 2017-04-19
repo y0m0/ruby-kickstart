@@ -29,4 +29,14 @@
 # shared [1,2,3], [3,2,1]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, true]}, [1, 2, 3]]
 
 def shared(a, b)
+  union = []
+  couples = {}
+  concat = a | b
+  concat.each do |x|
+    couples[x] = a.include?(x) || nil, b.include?(x) || nil
+  end
+  couples.each_pair do |k, v|
+    union << k if v.first == v.last
+  end
+  return couples, union.sort
 end

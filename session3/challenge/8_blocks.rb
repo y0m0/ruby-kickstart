@@ -26,11 +26,18 @@
 
 
 class Person
-  attr_accessor :name
+  attr_accessor :name, :age, :quote
 
-  def initialize(&initializer)
-    @initializer = initializer
-    initializer.call self
+  def initialize(optional=Hash.new, &initializer)
+    # assign name, age, and quote from hash if given
+    @name = optional[:name]
+    @age = optional[:age]
+    @quote = optional[:quote]
+
+    # assign an empty proc even if it's not given as argument so the call to the proc can happen anyway
+    @initializer = (initializer || Proc.new { |person| })
+    # call the &initialize proc (possibly overriding the info colleted from the optional hash)
+    @initializer.call self
   end
 
   def reinit
