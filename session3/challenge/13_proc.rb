@@ -52,5 +52,27 @@
 #   end
 # end       # => ["a", "m", "r", 1, 3, 4, 9, 2.5, 9.0, 25.8]
 
-def your_sort
+def your_sort(list, &evaluator)
+  return list if list.size <= 1
+  evaluator ||= Proc.new { |a,b| a <=> b }
+
+  # bubble sort
+  ordered = false
+  until ordered
+    ordered = true # change the ordered flag to true
+
+    0.upto(list.size - 2) do |i|
+      # call proc to evaluate the 2 elements
+      evaluation = evaluator.call(list[i], list[i + 1])
+
+      # if proc return 1 (True) swap the elements place
+      if evaluation > 0
+        list[i], list[i + 1] = list[i + 1], list[i]
+        # since we swapped 2 elements set the flag back to false
+        ordered = false
+      end
+    end
+  end
+
+  list
 end
