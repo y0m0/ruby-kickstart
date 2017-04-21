@@ -15,3 +15,13 @@
 # head = {:data => 6, :next => head}
 # print_list head                    # >> "6\n5\n4\n3\n2\n1\n"
 
+def list_size(list)
+  return 0 if !list
+  1 + list_size(list[:next])
+end
+
+def print_list(list, size=list_size(list))
+  return "" unless list
+  print "#{list[:data]}\n"
+  print_list list[:next], (size - 1)
+end
