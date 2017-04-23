@@ -10,7 +10,7 @@
 def word_count(string)
   hash = Hash.new(0)
   string.split(" ").each do |word|
-      hash[word.downcase] += 1
+    hash[word.downcase] += 1
   end
   hash
 end
