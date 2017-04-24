@@ -29,19 +29,19 @@
 # create it from scratch :)
 
 
-def pathify(structure)
-  tree = ""
-  structure.each do |k, v|
-    puts "#{k}: is a hash: #{v.is_a? Hash}"
-    if v.is_a? Hash
-      tree += "/#{k}"
-      pathify(v)
-    else
-      tree += "/#{k}"
-    end
-  end
-  tree
-end
+# def pathify(structure)
+#   tree = ""
+#   structure.each do |k, v|
+#     puts "#{k}: is a hash: #{v.is_a? Hash}"
+#     if v.is_a? Hash
+#       tree += "/#{k}"
+#       pathify(v)
+#     else
+#       tree += "/#{k}"
+#     end
+#   end
+#   tree
+# end
 
 ## solution
 
